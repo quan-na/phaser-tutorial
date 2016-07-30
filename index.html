@@ -13,6 +13,7 @@
         var cursors, player, platforms, stars;
         var score = 0;
         var scoreText;
+        var combo = false;
         var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {
             preload: function () {
                 game.load.image('logo', './res/phaser.png');
@@ -118,10 +119,16 @@
                                                 player.body.velocity.y = -450;
 
                                                 //  Add and update the score
-                                                score += 10;
+                                                if (combo)
+                                                    score += 20;
+                                                else
+                                                    score += 10;
+                                                combo = true;
                                                 scoreText.text = 'Score: ' + score;
                                             },
                                             null, this);
+                if (player.body.touching.down)
+                    combo = false;
             }
         });
     };
