@@ -69,8 +69,7 @@
                 stars = game.add.group();
                 stars.enableBody = true;
                 //  Here we'll create 12 of them evenly spaced apart
-                for (var i = 0; i < 12; i++)
-                {
+                for (var i = 0; i < 12; i++) {
                     //  Create a star inside of the 'stars' group
                     var star = stars.create(i * 70, 0, 'star');
                     //  Let gravity do its thing
@@ -88,47 +87,48 @@
 
                 //  Reset the players velocity (movement)
                 player.body.velocity.x = 0;
-                if (cursors.left.isDown)
-                {
+                if (cursors.left.isDown) {
                     //  Move to the left
                     player.body.velocity.x = -150;
                     player.animations.play('left');
                 }
-                else if (cursors.right.isDown)
-                {
+                else if (cursors.right.isDown) {
                     //  Move to the right
                     player.body.velocity.x = 150;
                     player.animations.play('right');
                 }
-                else
-                {
+                else {
                     //  Stand still
                     player.animations.stop();
                     player.frame = 4;
                 }
                 //  Allow the player to jump if they are touching the ground.
-                if (cursors.up.isDown && player.body.touching.down)
-                {
-                    player.body.velocity.y = -350;
+                if ( player.body.touching.down) {
+                    if (cursors.up.isDown) {
+                        player.body.velocity.y = -350;
+                    }
+                    combo = false; // no combo if player have to jump again
+                    scoreText.setStyle({fill: '#000'}, true);
                 }
 
                 game.physics.arcade.overlap(player, stars,
                                             function (player, star) {
                                                 // Removes the star from the screen
                                                 star.kill();
-                                                player.body.velocity.y = -450;
+                                                player.body.velocity.y = -350; // air jump
 
                                                 //  Add and update the score
-                                                if (combo)
+                                                if (combo) {
                                                     score += 20;
-                                                else
+                                                    scoreText.setStyle({fill: '#F00'}, false);
+                                                } else {
                                                     score += 10;
+                                                    scoreText.setStyle({fill: '#000'}, false);
+                                                }
                                                 combo = true;
                                                 scoreText.text = 'Score: ' + score;
                                             },
                                             null, this);
-                if (player.body.touching.down)
-                    combo = false;
             }
         });
     };
