@@ -1,7 +1,7 @@
 Phaser Tutorial
 ===============
 
-This is my code doing Phaser() tutorial.
+This is my code doing Phaser(http://phaser.io/) tutorial.
 
 How to run
 ==========
